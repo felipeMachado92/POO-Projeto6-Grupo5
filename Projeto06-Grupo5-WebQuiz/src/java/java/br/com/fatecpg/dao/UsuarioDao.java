@@ -1,5 +1,6 @@
 package java.br.com.fatecpg.dao;
 
+import java.br.com.fatecpg.quiz.TipoUsuario;
 import java.br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,17 +13,23 @@ public class UsuarioDao {
     
     
     public void insereUsuario(Usuario usuario) throws SQLException{
-        String sql ="INSERT INTO USUARIO (NM_USUARIO, SENHA, LOGIN)";
+        String sql ="INSERT INTO USUARIO (NM_USUARIO, SENHA, LOGIN, ID_TIPO_USUARIO)"
+                + "VALUES(?,?,?,?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1,usuario.getNome());
             stmt.setString(2,usuario.getSenha());
             stmt.setString(3,usuario.getLogin());
+            stmt.setInt(4,usuario.getTpUsuario().getIdTipoUsuario());
             
             stmt.execute();
             stmt.close();
         } catch(SQLException e){
             throw new RuntimeException(e);
+        } finally{
+            if(!connection.isClosed()){
+                connection.close();
+            }
         }
     }    
 }
