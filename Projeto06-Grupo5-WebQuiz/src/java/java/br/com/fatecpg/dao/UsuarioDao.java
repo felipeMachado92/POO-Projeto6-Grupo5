@@ -31,5 +31,9 @@ public class UsuarioDao {
                 connection.close();
             }
         }
-    }    
+    }
+    
+    public void excluiUsuario(Usuario usuario){
+        String sql = "DELETE FROM USUARIO WHERE ";
+    }
 }
