@@ -70,7 +70,7 @@ public class UsuarioDao {
     public void alteraUsuario(Usuario usuario) throws SQLException{
         try{
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE USUARIO NM_USUARIO=?, SENHA=?, LOGIN=?, ID_TIPO_USUARIO=? WHERE ID_USUARIO=?");
+                    .prepareStatement("UPDATE USUARIO SET NM_USUARIO=?, SENHA=?, LOGIN=?, ID_TIPO_USUARIO=? WHERE ID_USUARIO=?");
             stmt.setString(1,usuario.getNome());
             stmt.setString(2,usuario.getSenha());
             stmt.setString(3,usuario.getLogin());

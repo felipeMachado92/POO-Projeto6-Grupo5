@@ -66,7 +66,7 @@ public class TesteDao {
     public void alteraTeste(Teste teste) throws SQLException{
         try{
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE TESTE NM_TESTE=?, DESC_TESTE=?, ID_PARTIDA=? WHERE ID_TESTE=?");
+                    .prepareStatement("UPDATE TESTE SET NM_TESTE=?, DESC_TESTE=?, ID_PARTIDA=? WHERE ID_TESTE=?");
             stmt.setString(1,teste.getNomeTeste());
             stmt.setString(2,teste.getDescTeste());
             stmt.setInt(3,teste.getPartida().getIdPartida());

@@ -67,7 +67,7 @@ public class AlternativaDao {
     public void alteraAlternativa(Alternativa alternativa) throws SQLException{
         try{
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE ALTERNATIVA TEXTO_ALTERNATIVA=?, TIPO=? WHERE ID=?");
+                    .prepareStatement("UPDATE ALTERNATIVA SET TEXTO_ALTERNATIVA=?, TIPO=? WHERE ID=?");
             stmt.setString(1,alternativa.getTextoAlternativa());
             stmt.setBoolean(2,alternativa.isTipo());
             stmt.setInt(3, alternativa.getIdAlternativa());

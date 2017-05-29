@@ -63,7 +63,7 @@ public class QuestaoDao {
     public void alteraQuestao(Questao questao) throws SQLException{
         try{
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE QUESTAO TEXTO_QUESTAO=?, ID_TESTE=? WHERE ID_QUESTAO=?");
+                    .prepareStatement("UPDATE QUESTAO SET TEXTO_QUESTAO=?, ID_TESTE=? WHERE ID_QUESTAO=?");
             stmt.setString(1,questao.getTextoQuestao());
             stmt.setInt(2,questao.getTeste().getIdTeste());
             stmt.setInt(3, questao.getIdQuestao());
