@@ -5,6 +5,7 @@ public class Teste {
         private int idTeste;
         private String nomeTeste;
         private String descTeste;
+        private Partida partida;
 
     public int getIdTeste() {
         return idTeste;
@@ -28,6 +29,14 @@ public class Teste {
 
     public void setDescTeste(String descTeste) {
         this.descTeste = descTeste;
+    }
+
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
     }
         
 }
