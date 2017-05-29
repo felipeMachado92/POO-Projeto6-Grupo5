@@ -20,7 +20,6 @@ public class PartidaDao {
             stmt.setDouble(1,partida.getPontuacao());
             stmt.setDate(2, new Date(partida.getDataHora().getTimeInMillis()));
             stmt.setInt(3,partida.getUsuario().getIdUsuario());
-            stmt.setInt(4,partida.getTeste().getIdTeste());
             
             stmt.execute();
             stmt.close();
