@@ -1,10 +1,17 @@
 package java.br.com.fatecpg.dao;
 
+import java.br.com.fatecpg.quiz.Partida;
 import java.br.com.fatecpg.quiz.Questao;
+import java.br.com.fatecpg.quiz.Teste;
+import java.br.com.fatecpg.quiz.TipoUsuario;
+import java.br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /*@author Felipe*/
 public class QuestaoDao {
@@ -30,26 +37,62 @@ public class QuestaoDao {
     }
     
     
-    public Questao pegaQuestao(Questao questao) throws SQLException{
+    public List<Questao> pegaQuestao(Questao questao) throws SQLException{
         try{
-            
+            List<Questao> questoes = new ArrayList<Questao>();
             PreparedStatement stmt = this.connection.
                     prepareStatement("SELECT * FROM QUESTAO WHERE ID=?");
             stmt.setInt(1, questao.getIdQuestao());
             ResultSet rs = stmt.executeQuery();
             
-            if(rs.next()){
-                Questao user  = new Questao();
-                user.setIdQuestao(rs.getInt("ID_QUESTAO"));
-                user.setTextoQuestao(rs.getString("TEXTO_QUESTAO"));
+            while(rs.next()){
+                Questao question = new Questao();
+                question.setIdQuestao(rs.getInt("ID_QUESTAO"));
+                question.setTextoQuestao(rs.getString("TEXTO_QUESTAO"));
                 
-                rs.close();
-                stmt.close();
-                return user;
+                PreparedStatement stmt2 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_TESTE=?");
+                stmt2.setInt(1,question.getTeste().getIdTeste());
+                ResultSet rs2 = stmt2.executeQuery();
+                
+                Teste test = new Teste();
+                test.setIdTeste(rs2.getInt("ID_TESTE"));
+                test.setNomeTeste(rs2.getString("NM_TESTE"));
+                test.setDescTeste(rs2.getString("DESC_TESTE"));
+                
+                PreparedStatement stmt3 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_PARTIDA=?");
+                stmt3.setInt(1,test.getPartida().getIdPartida());
+                ResultSet rs3 = stmt3.executeQuery();
+                
+                Partida match = new Partida();
+                match.setIdPartida(rs3.getInt("ID_PARTIDA"));
+                match.setPontuacao(rs3.getDouble("PONTUACAO"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs3.getDate("DATA_HORA"));
+                match.setDataHora(data);
+                
+                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_USUARIO=?");
+                stmt4.setInt(1,match.getUsuario().getIdUsuario());
+                ResultSet rs4 = stmt4.executeQuery();
+                
+                Usuario user = new Usuario();
+                user.setIdUsuario(rs4.getInt("ID_USUARIO"));
+                user.setNome(rs4.getString("NM_USUARIO"));
+                user.setLogin(rs4.getString("LOGIN"));
+                
+                TipoUsuario tpUser = new TipoUsuario();
+                tpUser.setIdTipoUsuario(rs4.getInt("ID_TIPO_USUARIO"));
+                
+                user.setTpUsuario(tpUser);
+                match.setUsuario(user);
+                test.setPartida(match);
+                question.setTeste(test);
+                
+                questoes.add(question);
             }
             rs.close();
             stmt.close();
-            
+            return questoes;
+                    
         } catch(SQLException e){
             throw new RuntimeException(e);
         } finally{
@@ -57,7 +100,6 @@ public class QuestaoDao {
                 connection.close();
             }
         }
-        return null;
     }
     
     public void alteraQuestao(Questao questao) throws SQLException{
