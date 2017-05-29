@@ -2,10 +2,19 @@ package java.br.com.fatecpg.quiz;
 
 /* @author Felipe*/
 public class Usuario {
+    private int id;
     private String nome;
     private String login;
     private String senha;
     private TipoUsuario tpUsuario;
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

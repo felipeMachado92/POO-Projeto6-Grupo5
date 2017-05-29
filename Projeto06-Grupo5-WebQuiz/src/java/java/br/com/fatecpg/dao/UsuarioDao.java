@@ -4,6 +4,7 @@ import java.br.com.fatecpg.quiz.TipoUsuario;
 import java.br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /*@author Felipe*/
@@ -33,7 +34,71 @@ public class UsuarioDao {
         }
     }
     
-    public void excluiUsuario(Usuario usuario){
-        String sql = "DELETE FROM USUARIO WHERE ";
+    
+    public Usuario pegaUsuario(Usuario usuario) throws SQLException{
+        try{
+            PreparedStatement stmt = this.connection.
+                    prepareStatement("SELECT * FROM USUARIO WHERE ID=?");
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                Usuario user  = new Usuario();
+                user.setId(rs.getInt("ID_USUARIO"));
+                user.setNome(rs.getString("NM_USUARIO"));
+                user.setLogin(rs.getString("LOGIN"));
+                user.setSenha(rs.getString("SENHA"));
+                
+                rs.close();
+                stmt.close();
+                return user;
+            }
+            rs.close();
+            stmt.close();
+            
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        } finally{
+            if(!connection.isClosed()){
+                connection.close();
+            }
+        }
+        return null;
     }
+    
+    public void alteraUsuario(Usuario usuario) throws SQLException{
+        try{
+            PreparedStatement stmt = connection
+                    .prepareStatement("UPDATE USUARIO (NM_USUARIO, SENHA, LOGIN, ID_TIPO_USUARIO) VALUES(?,?,?,?)");
+            stmt.setString(1,usuario.getNome());
+            stmt.setString(2,usuario.getSenha());
+            stmt.setString(3,usuario.getLogin());
+            stmt.setInt(4,usuario.getTpUsuario().getIdTipoUsuario());
+            stmt.setInt(5, usuario.getId());
+            
+            stmt.execute();
+            stmt.close();
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        } finally{
+            if(!connection.isClosed()){
+                connection.close();
+            }
+        }
+    }
+    
+    public void excluiUsuario(Usuario usuario) throws SQLException{
+        try{
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM USUARIO WHERE ID=?");
+            
+            stmt.execute();
+            stmt.close();
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        } finally{
+            if(!connection.isClosed()){
+                connection.close();
+            }
+        }
+    }
+    
 }
