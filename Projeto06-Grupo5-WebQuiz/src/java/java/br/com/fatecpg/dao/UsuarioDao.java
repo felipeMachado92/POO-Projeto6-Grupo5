@@ -35,20 +35,23 @@ public class UsuarioDao {
     }
     
     
-    public Usuario pegaUsuario(Usuario usuario) throws SQLException{
+    public Usuario pegaUsuario(String login, String senha) throws SQLException{
         try{
             
             PreparedStatement stmt = this.connection.
-                    prepareStatement("SELECT * FROM USUARIO WHERE ID=?");
-            stmt.setInt(1, usuario.getIdUsuario());
+                    prepareStatement("SELECT * FROM USUARIO WHERE LOGIN=? AND SENHA=?");
+            stmt.setString(1, login);
+            stmt.setString(2,senha);
             ResultSet rs = stmt.executeQuery();
             
             if(rs.next()){
                 Usuario user  = new Usuario();
+                TipoUsuario tpUser = new TipoUsuario(); 
                 user.setIdUsuario(rs.getInt("ID_USUARIO"));
                 user.setNome(rs.getString("NM_USUARIO"));
-                user.setLogin(rs.getString("LOGIN"));
-                user.setSenha(rs.getString("SENHA"));
+                user.setLogin(rs.getString("LOGIN"));                
+                tpUser.setIdTipoUsuario(rs.getInt("ID_TIPO_USUARIO"));
+                user.setTpUsuario(tpUser);
                 
                 rs.close();
                 stmt.close();
