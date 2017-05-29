@@ -5,7 +5,6 @@ public class Teste {
         private int idTeste;
         private String nomeTeste;
         private String descTeste;
-        private Questao questao;
 
     public int getIdTeste() {
         return idTeste;
@@ -29,14 +28,6 @@ public class Teste {
 
     public void setDescTeste(String descTeste) {
         this.descTeste = descTeste;
-    }
-
-    public Questao getQuestao() {
-        return questao;
-    }
-
-    public void setQuestao(Questao questao) {
-        this.questao = questao;
     }
         
 }
