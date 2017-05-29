@@ -9,7 +9,6 @@ public class Partida {
     private double pontuacao;
     private Calendar dataHora;
     private Usuario usuario;
-    private Teste teste;
 
     public int getIdPartida() {
         return idPartida;
@@ -41,14 +40,6 @@ public class Partida {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Teste getTeste() {
-        return teste;
-    }
-
-    public void setTeste(Teste teste) {
-        this.teste = teste;
     }
     
     
