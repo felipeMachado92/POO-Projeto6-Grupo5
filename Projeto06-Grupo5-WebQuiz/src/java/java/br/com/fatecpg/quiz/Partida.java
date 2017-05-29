@@ -1,13 +1,15 @@
 package java.br.com.fatecpg.quiz;
 
-import java.sql.Date;
+import java.util.Calendar;
+
 
 /*@author Felipe*/
 public class Partida {
     private int idPartida;
     private double pontuacao;
-    private Date dataHora;
+    private Calendar dataHora;
     private Usuario usuario;
+    private Teste teste;
 
     public int getIdPartida() {
         return idPartida;
@@ -25,11 +27,11 @@ public class Partida {
         this.pontuacao = pontuacao;
     }
 
-    public Date getDataHora() {
+    public Calendar getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Date dataHora) {
+    public void setDataHora(Calendar dataHora) {
         this.dataHora = dataHora;
     }
 
@@ -39,6 +41,14 @@ public class Partida {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Teste getTeste() {
+        return teste;
+    }
+
+    public void setTeste(Teste teste) {
+        this.teste = teste;
     }
     
     
