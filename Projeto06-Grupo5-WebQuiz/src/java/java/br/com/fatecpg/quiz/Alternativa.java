@@ -2,15 +2,16 @@ package java.br.com.fatecpg.quiz;
 
 /* @author Felipe*/
 public class Alternativa {
-        private String texto;
+        private int idAlternativa;
+        private String textoAlternativa;
         private boolean tipo;
 
-    public String getTexto() {
-        return texto;
+    public String getTextoAlternativa() {
+        return textoAlternativa;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setTextoAlternativa(String texto) {
+        this.textoAlternativa = texto;
     }
 
     public boolean isTipo() {
@@ -19,6 +20,14 @@ public class Alternativa {
 
     public void setTipo(boolean tipo) {
         this.tipo = tipo;
+    }
+
+    public int getIdAlternativa() {
+        return idAlternativa;
+    }
+
+    public void setIdAlternativa(int idAlternativa) {
+        this.idAlternativa = idAlternativa;
     }
         
 }
