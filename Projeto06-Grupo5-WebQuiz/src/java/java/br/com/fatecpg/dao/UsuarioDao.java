@@ -37,13 +37,15 @@ public class UsuarioDao {
     
     public Usuario pegaUsuario(Usuario usuario) throws SQLException{
         try{
+            
             PreparedStatement stmt = this.connection.
                     prepareStatement("SELECT * FROM USUARIO WHERE ID=?");
+            stmt.setInt(1, usuario.getIdUsuario());
             ResultSet rs = stmt.executeQuery();
             
             if(rs.next()){
                 Usuario user  = new Usuario();
-                user.setId(rs.getInt("ID_USUARIO"));
+                user.setIdUsuario(rs.getInt("ID_USUARIO"));
                 user.setNome(rs.getString("NM_USUARIO"));
                 user.setLogin(rs.getString("LOGIN"));
                 user.setSenha(rs.getString("SENHA"));
@@ -73,7 +75,7 @@ public class UsuarioDao {
             stmt.setString(2,usuario.getSenha());
             stmt.setString(3,usuario.getLogin());
             stmt.setInt(4,usuario.getTpUsuario().getIdTipoUsuario());
-            stmt.setInt(5, usuario.getId());
+            stmt.setInt(5, usuario.getIdUsuario());
             
             stmt.execute();
             stmt.close();
