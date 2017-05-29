@@ -5,6 +5,7 @@ public class Alternativa {
         private int idAlternativa;
         private String textoAlternativa;
         private boolean tipo;
+        private Questao questao;
 
     public String getTextoAlternativa() {
         return textoAlternativa;
@@ -28,6 +29,14 @@ public class Alternativa {
 
     public void setIdAlternativa(int idAlternativa) {
         this.idAlternativa = idAlternativa;
+    }
+
+    public Questao getQuestao() {
+        return questao;
+    }
+
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
         
 }
