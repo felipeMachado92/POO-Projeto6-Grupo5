@@ -15,16 +15,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>        
+    <body>
         <h1>Testes</h1>
+        <%if(request.getParameter("deleta") != null){
+            
+        }%>
         <h2>Escolha o teste que deseja fazer</h2>
         <%try{%>
-            <button><a href="insereTeste.jsp">Incluir Teste</a></button>
-            <%List<Teste> list = TesteDao.pegaTestes();%>
+            <button><a href="novoTeste.jsp">Incluir Teste</a></button>
+            <% TesteDao dao = new TesteDao();
+            List<Teste> list = dao.pegaTestes();%>
             <table border =1>
                 <%for(Teste t: list){%>
                 <tr>
-                    <td><%= t.getNomeTeste()%></td>
+                    <td><%= t.getIdTeste()%> <%= t.getNomeTeste()%></td>
                 </tr>
                 <tr>
                     <td<%= t.getDescTeste()%></td
@@ -33,7 +37,7 @@
                     <td>
                         <button><a href="teste.jsp?id=<%=t.getIdTeste()%>">Iniciar</a></button>
                         <button><a href="editaTeste.jsp?id=<%=t.getIdTeste()%>">Editar</a></button>
-                        <button><a href="deletaTeste.jsp?id=<%=t.getIdTeste()%>">Excluir</a></button>
+                        <input type="submit" name="deleta" value="Excluir">
                     </td>
                 </tr>
                 <%}%>
