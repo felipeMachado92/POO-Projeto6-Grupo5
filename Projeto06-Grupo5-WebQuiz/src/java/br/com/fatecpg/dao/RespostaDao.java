@@ -1,6 +1,6 @@
-package java.br.com.fatecpg.dao;
+package br.com.fatecpg.dao;
 
-import java.br.com.fatecpg.quiz.Resposta;
+import br.com.fatecpg.quiz.Resposta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

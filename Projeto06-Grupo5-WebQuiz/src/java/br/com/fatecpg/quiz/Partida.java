@@ -1,4 +1,4 @@
-package java.br.com.fatecpg.quiz;
+package br.com.fatecpg.quiz;
 
 import java.util.Calendar;
 

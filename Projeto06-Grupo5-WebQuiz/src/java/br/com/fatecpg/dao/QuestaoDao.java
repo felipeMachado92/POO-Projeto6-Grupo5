@@ -1,10 +1,10 @@
-package java.br.com.fatecpg.dao;
+package br.com.fatecpg.dao;
 
-import java.br.com.fatecpg.quiz.Partida;
-import java.br.com.fatecpg.quiz.Questao;
-import java.br.com.fatecpg.quiz.Teste;
-import java.br.com.fatecpg.quiz.TipoUsuario;
-import java.br.com.fatecpg.quiz.Usuario;
+import br.com.fatecpg.quiz.Partida;
+import br.com.fatecpg.quiz.Questao;
+import br.com.fatecpg.quiz.Teste;
+import br.com.fatecpg.quiz.TipoUsuario;
+import br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
