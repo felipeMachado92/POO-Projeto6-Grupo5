@@ -37,12 +37,12 @@ public class QuestaoDao {
     }
     
     
-    public List<Questao> pegaQuestoes(Questao questao) throws SQLException{
+    public List<Questao> pegaQuestoes(Teste teste) throws SQLException{
         try{
             List<Questao> questoes = new ArrayList<Questao>();
             PreparedStatement stmt = this.connection.
-                    prepareStatement("SELECT * FROM QUESTAO WHERE ID=?");
-            stmt.setInt(1, questao.getIdQuestao());
+                    prepareStatement("SELECT * FROM QUESTAO WHERE ID_TESTE=?");
+            stmt.setInt(1, teste.getIdTeste());
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){

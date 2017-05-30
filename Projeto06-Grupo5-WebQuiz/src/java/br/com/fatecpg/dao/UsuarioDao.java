@@ -17,7 +17,7 @@ public class UsuarioDao {
     }
     
     public void insereUsuario(Usuario usuario) throws SQLException{
-        String sql ="INSERT INTO ROOT.USUARIO (NM_USUARIO, SENHA, LOGIN, ID_TIPO_USUARIO)"
+        String sql ="INSERT INTO USUARIO (NM_USUARIO, SENHA, LOGIN, ID_TIPO_USUARIO)"
                 + "VALUES(?,?,?,?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);

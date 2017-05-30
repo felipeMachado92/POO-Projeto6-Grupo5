@@ -40,7 +40,7 @@ public class TesteDao {
     
     public List<Teste> pegaTestes() throws SQLException{
         try{
-            List<Teste> testes = new ArrayList<Teste>();
+            List<Teste> testes = new ArrayList<>();
             PreparedStatement stmt = this.connection.
                     prepareStatement("SELECT * FROM TESTE");
             ResultSet rs = stmt.executeQuery();
