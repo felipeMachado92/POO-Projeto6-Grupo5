@@ -1,6 +1,7 @@
 package br.com.fatecpg.dao;
 
 import br.com.fatecpg.quiz.Alternativa;
+import br.com.fatecpg.quiz.ConnectionFactory;
 import br.com.fatecpg.quiz.Partida;
 import br.com.fatecpg.quiz.Questao;
 import br.com.fatecpg.quiz.Teste;
@@ -20,14 +21,18 @@ import java.util.List;
  */
 public class AlternativaDao {
     private Connection connection;
+    public AlternativaDao() throws Exception{
+        this.connection = new ConnectionFactory().getConnection();
+    }
     
     public void insereAlternativa(Alternativa alternativa) throws SQLException{
-        String sql ="INSERT INTO ALTERNATIVA (TEXTO_ALTERNATIVA, TIPO)"
-                + "VALUES(?,?)";
+        String sql ="INSERT INTO ALTERNATIVA (TEXTO_ALTERNATIVA, TIPO,ID_QUESTAO)"
+                + "VALUES(?,?,?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1,alternativa.getTextoAlternativa());
             stmt.setBoolean(2,alternativa.isTipo());
+            stmt.setInt(3, alternativa.getQuestao().getIdQuestao());
             
             stmt.execute();
             stmt.close();

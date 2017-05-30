@@ -21,12 +21,13 @@ public class TesteDao {
     }
     
     public void insereTeste(Teste teste) throws SQLException{
-        String sql ="INSERT INTO TESTE (NM_TESTE, DESC_TESTE, ID_PARTIDA)"
-                + "VALUES(?,?,?,?)";
+        String sql ="INSERT INTO TESTE (ID_TESTE,NM_TESTE, DESC_TESTE)"
+                + "VALUES(?,?,?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1,teste.getNomeTeste());
-            stmt.setString(2,teste.getDescTeste());
+            stmt.setInt(1,teste.getIdTeste());
+            stmt.setString(2,teste.getNomeTeste());
+            stmt.setString(3,teste.getDescTeste());
             
             stmt.execute();
             stmt.close();
@@ -71,7 +72,7 @@ public class TesteDao {
     public void alteraTeste(Teste teste) throws SQLException{
         try{
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE TESTE SET NM_TESTE=?, DESC_TESTE=?, ID_PARTIDA=? WHERE ID_TESTE=?");
+                    .prepareStatement("UPDATE TESTE SET NM_TESTE=?, DESC_TESTE=?, WHERE ID_TESTE=?");
             stmt.setString(1,teste.getNomeTeste());
             stmt.setString(2,teste.getDescTeste());
             stmt.setInt(3, teste.getIdTeste());
