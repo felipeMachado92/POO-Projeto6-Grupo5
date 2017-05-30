@@ -27,15 +27,19 @@
                 
                 Teste t = new Teste();
                 Questao q = new Questao();
-                Alternativa a = new Alternativa();
-                
                 t.setNomeTeste(nomeTeste);
                 t.setDescTeste(descTeste);
+                
+                TesteDao daoT = new TesteDao();
+                daoT.insereTeste(t);
                 
                 for(int i=0; i < 15; i++){
                     String textoQuestao = request.getParameter("textoQuestao"+i);
                     q.setTextoQuestao(textoQuestao);
                     q.setTeste(t);
+                    
+                    QuestaoDao daoQ = new QuestaoDao();
+                    daoQ.insereQuestao(q);
                     for(int j = 0; j < 3; j++){
                         String textoAlternativa = request.getParameter("textoAlternativa"+i+j);
                         boolean tipo;
@@ -44,17 +48,15 @@
                         } else{
                             tipo = false;
                         }
+                        Alternativa a = new Alternativa();
                         a.setTextoAlternativa(textoAlternativa);
                         a.setTipo(tipo);
                         a.setQuestao(q);
+                        
                         AlternativaDao daoA = new AlternativaDao();
                         daoA.insereAlternativa(a);
                     }
-                    QuestaoDao daoQ = new QuestaoDao();
-                    daoQ.insereQuestao(q);
                 }
-                TesteDao daoT = new TesteDao();
-                daoT.insereTeste(t);
                 response.sendRedirect("testes.jsp");
             }catch(Exception ex){%>
                 <h3>Erro: <%=ex.getMessage()%></h3>
