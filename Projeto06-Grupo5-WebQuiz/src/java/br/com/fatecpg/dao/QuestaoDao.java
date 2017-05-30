@@ -59,34 +59,7 @@ public class QuestaoDao {
                 test.setNomeTeste(rs2.getString("NM_TESTE"));
                 test.setDescTeste(rs2.getString("DESC_TESTE"));
                 
-                PreparedStatement stmt3 = this.connection.prepareStatement("SELECT * FROM PARTIDA WHERE ID_PARTIDA=?");
-                stmt3.setInt(1,test.getPartida().getIdPartida());
-                ResultSet rs3 = stmt3.executeQuery();
-                
-                Partida match = new Partida();
-                match.setIdPartida(rs3.getInt("ID_PARTIDA"));
-                match.setPontuacao(rs3.getDouble("PONTUACAO"));
-                Calendar data = Calendar.getInstance();
-                data.setTime(rs3.getDate("DATA_HORA"));
-                match.setDataHora(data);
-                
-                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
-                stmt4.setInt(1,match.getUsuario().getIdUsuario());
-                ResultSet rs4 = stmt4.executeQuery();
-                
-                Usuario user = new Usuario();
-                user.setIdUsuario(rs4.getInt("ID_USUARIO"));
-                user.setNome(rs4.getString("NM_USUARIO"));
-                user.setLogin(rs4.getString("LOGIN"));
-                
-                TipoUsuario tpUser = new TipoUsuario();
-                tpUser.setIdTipoUsuario(rs4.getInt("ID_TIPO_USUARIO"));
-                
-                user.setTpUsuario(tpUser);
-                match.setUsuario(user);
-                test.setPartida(match);
                 question.setTeste(test);
-                
                 questoes.add(question);
             }
             rs.close();

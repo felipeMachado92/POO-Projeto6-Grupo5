@@ -73,32 +73,6 @@ public class AlternativaDao {
                 test.setNomeTeste(rs3.getString("NM_TESTE"));
                 test.setDescTeste(rs3.getString("DESC_TESTE"));
                 
-                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM PARTIDA WHERE ID_PARTIDA=?");
-                stmt4.setInt(1,test.getPartida().getIdPartida());
-                ResultSet rs4 = stmt4.executeQuery();
-                
-                Partida match = new Partida();
-                match.setIdPartida(rs4.getInt("ID_PARTIDA"));
-                match.setPontuacao(rs4.getDouble("PONTUACAO"));
-                Calendar data = Calendar.getInstance();
-                data.setTime(rs4.getDate("DATA_HORA"));
-                match.setDataHora(data);
-                
-                PreparedStatement stmt5 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
-                stmt5.setInt(1,match.getUsuario().getIdUsuario());
-                ResultSet rs5 = stmt5.executeQuery();
-                
-                Usuario user = new Usuario();
-                user.setIdUsuario(rs5.getInt("ID_USUARIO"));
-                user.setNome(rs5.getString("NM_USUARIO"));
-                user.setLogin(rs5.getString("LOGIN"));
-                
-                TipoUsuario tpUser = new TipoUsuario();
-                tpUser.setIdTipoUsuario(rs5.getInt("ID_TIPO_USUARIO"));
-                
-                user.setTpUsuario(tpUser);
-                match.setUsuario(user);
-                test.setPartida(match);
                 question.setTeste(test);
                 alt.setQuestao(question);
                 
