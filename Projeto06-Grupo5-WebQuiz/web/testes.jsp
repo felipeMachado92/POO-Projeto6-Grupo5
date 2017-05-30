@@ -24,15 +24,17 @@
             <table border =1>
                 <%for(Teste t: list){%>
                 <tr>
-                    <%= t.getNomeTeste()%>
+                    <td><%= t.getNomeTeste()%></td>
                 </tr>
                 <tr>
-                    <%= t.getDescTeste()%>
+                    <td<%= t.getDescTeste()%></td
                 </tr>
                 <tr>
-                    <button><a href="teste.jsp?id=<%=t.getIdTeste()%>">Iniciar</a></button>
-                    <button><a href="editaTeste.jsp?id=<%=t.getIdTeste()%>">Editar</a></button>
-                    <button><a href="deletaTeste.jsp?id=<%=t.getIdTeste()%>">Excluir</a></button>
+                    <td>
+                        <button><a href="teste.jsp?id=<%=t.getIdTeste()%>">Iniciar</a></button>
+                        <button><a href="editaTeste.jsp?id=<%=t.getIdTeste()%>">Editar</a></button>
+                        <button><a href="deletaTeste.jsp?id=<%=t.getIdTeste()%>">Excluir</a></button>
+                    </td>
                 </tr>
                 <%}%>
             </table>
