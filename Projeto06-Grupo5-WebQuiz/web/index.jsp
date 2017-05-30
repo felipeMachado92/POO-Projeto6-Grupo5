@@ -4,6 +4,9 @@
     Author     : Felipe
 --%>
 
+<%@page import="br.com.fatecpg.quiz.TipoUsuario"%>
+<%@page import="br.com.fatecpg.dao.UsuarioDao"%>
+<%@page import="br.com.fatecpg.quiz.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,8 +24,22 @@
                     String nome = request.getParameter("nome");
                     String login = request.getParameter("login");
                     String senha = request.getParameter("senha");
+                    
+                    Usuario u = new Usuario();
+                    TipoUsuario tpu = new TipoUsuario();
+                    tpu.setIdTipoUsuario(2);
+                    
+                    u.setNome(nome);
+                    u.setSenha(senha);
+                    u.setLogin(login);
+                    u.setTpUsuario(tpu);
+                    
+                    UsuarioDao dao = new UsuarioDao();
+                    dao.insereUsuario(u);
+                    response.sendRedirect("testes.jsp");
+                    
                 } catch(Exception ex){%>
-                    <h3>Erro: Não vai da não!</h3>
+                    <h3>Erro: <%=ex.getMessage()%></h3>
                 <%}
             }
         %>
@@ -34,11 +51,11 @@
         <h2>Login</h2>
         <form>
             <label>Nome</label>
-            <input type="text" name="nome"><br/>
+            <input type="text" name="nome" value="${param.name}"/><br/>
             <label>Login</label>
-            <input type="text" name="login"><br/>
+            <input type="text" name="login" value="${param.login}"><br/>
             <label>Senha</label>
-            <input type="text" name="senha"><br/>
+            <input type="text" name="senha" value="${param.senha}"><br/>
             <input type="submit" name="inserir" value="Casdastrar-se">
             <input type="submit" name="logar" value="Entrar">
         </form>
