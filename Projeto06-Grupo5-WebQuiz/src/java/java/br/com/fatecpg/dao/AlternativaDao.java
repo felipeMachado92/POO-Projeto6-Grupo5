@@ -73,7 +73,7 @@ public class AlternativaDao {
                 test.setNomeTeste(rs3.getString("NM_TESTE"));
                 test.setDescTeste(rs3.getString("DESC_TESTE"));
                 
-                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_PARTIDA=?");
+                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM PARTIDA WHERE ID_PARTIDA=?");
                 stmt4.setInt(1,test.getPartida().getIdPartida());
                 ResultSet rs4 = stmt4.executeQuery();
                 
@@ -84,7 +84,7 @@ public class AlternativaDao {
                 data.setTime(rs4.getDate("DATA_HORA"));
                 match.setDataHora(data);
                 
-                PreparedStatement stmt5 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_USUARIO=?");
+                PreparedStatement stmt5 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
                 stmt5.setInt(1,match.getUsuario().getIdUsuario());
                 ResultSet rs5 = stmt5.executeQuery();
                 

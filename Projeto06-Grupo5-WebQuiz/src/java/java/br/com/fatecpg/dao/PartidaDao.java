@@ -1,12 +1,17 @@
 package java.br.com.fatecpg.dao;
 
 import java.br.com.fatecpg.quiz.Partida;
+import java.br.com.fatecpg.quiz.TipoUsuario;
+import java.br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.Date;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /*@author Felipe */
 public class PartidaDao {
@@ -32,26 +37,42 @@ public class PartidaDao {
         }
     }
     
-    public Partida pegaUsuario(Partida partida) throws SQLException{
+    public List<Partida> pegaPartidas() throws SQLException{
         try{
-            
+            List<Partida> partidas = new ArrayList<Partida>();
             PreparedStatement stmt = this.connection.
-                    prepareStatement("SELECT * FROM USUARIO WHERE ID=?");
-            stmt.setInt(1, partida.getIdPartida());
+                    prepareStatement("SELECT * FROM PARTIDA");
             ResultSet rs = stmt.executeQuery();
             
-            if(rs.next()){
+            while(rs.next()){
                 Partida match  = new Partida();
                 match.setIdPartida(rs.getInt("ID_USUARIO"));
                 match.setPontuacao(rs.getDouble("PONTUACAO"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("DATA_HORA"));
+                match.setDataHora(data);
                 
-                rs.close();
-                stmt.close();
-                return match;
+                PreparedStatement stmt2 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
+                stmt2.setInt(1,match.getUsuario().getIdUsuario());
+                ResultSet rs2 = stmt2.executeQuery();
+                
+                Usuario user = new Usuario();
+                user.setIdUsuario(rs2.getInt("ID_USUARIO"));
+                user.setNome(rs2.getString("NM_USUARIO"));
+                user.setLogin(rs2.getString("LOGIN"));
+                
+                TipoUsuario tpUser = new TipoUsuario();
+                tpUser.setIdTipoUsuario(rs2.getInt("ID_TIPO_USUARIO"));
+                
+                user.setTpUsuario(tpUser);
+                match.setUsuario(user);
+                
+                partidas.add(match);
             }
             rs.close();
             stmt.close();
-            
+            return partidas;
+                    
         } catch(SQLException e){
             throw new RuntimeException(e);
         } finally{
@@ -59,6 +80,5 @@ public class PartidaDao {
                 connection.close();
             }
         }
-        return null;
     }
 }

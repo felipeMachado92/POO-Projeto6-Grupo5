@@ -37,7 +37,7 @@ public class QuestaoDao {
     }
     
     
-    public List<Questao> pegaQuestao(Questao questao) throws SQLException{
+    public List<Questao> pegaQuestoes(Questao questao) throws SQLException{
         try{
             List<Questao> questoes = new ArrayList<Questao>();
             PreparedStatement stmt = this.connection.
@@ -59,7 +59,7 @@ public class QuestaoDao {
                 test.setNomeTeste(rs2.getString("NM_TESTE"));
                 test.setDescTeste(rs2.getString("DESC_TESTE"));
                 
-                PreparedStatement stmt3 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_PARTIDA=?");
+                PreparedStatement stmt3 = this.connection.prepareStatement("SELECT * FROM PARTIDA WHERE ID_PARTIDA=?");
                 stmt3.setInt(1,test.getPartida().getIdPartida());
                 ResultSet rs3 = stmt3.executeQuery();
                 
@@ -70,7 +70,7 @@ public class QuestaoDao {
                 data.setTime(rs3.getDate("DATA_HORA"));
                 match.setDataHora(data);
                 
-                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM TESTE WHERE ID_USUARIO=?");
+                PreparedStatement stmt4 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
                 stmt4.setInt(1,match.getUsuario().getIdUsuario());
                 ResultSet rs4 = stmt4.executeQuery();
                 

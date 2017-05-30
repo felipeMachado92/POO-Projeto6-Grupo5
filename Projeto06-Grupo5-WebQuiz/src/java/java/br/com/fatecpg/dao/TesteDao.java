@@ -1,10 +1,16 @@
 package java.br.com.fatecpg.dao;
 
+import java.br.com.fatecpg.quiz.Partida;
 import java.br.com.fatecpg.quiz.Teste;
+import java.br.com.fatecpg.quiz.TipoUsuario;
+import java.br.com.fatecpg.quiz.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /*@author Felipe */
 public class TesteDao {
@@ -32,27 +38,52 @@ public class TesteDao {
     }
     
     
-    public Teste pegaTeste(Teste teste) throws SQLException{
+    public List<Teste> pegaTestes() throws SQLException{
         try{
-            
+            List<Teste> testes = new ArrayList<Teste>();
             PreparedStatement stmt = this.connection.
-                    prepareStatement("SELECT * FROM TESTE WHERE ID=?");
-            stmt.setInt(1, teste.getIdTeste());
+                    prepareStatement("SELECT * FROM TESTE");
             ResultSet rs = stmt.executeQuery();
             
-            if(rs.next()){
-                Teste user  = new Teste();
-                user.setIdTeste(rs.getInt("ID_TESTE"));
-                user.setNomeTeste(rs.getString("NM_TESTE"));
-                user.setDescTeste(rs.getString("DESC_TESTE"));
+            while(rs.next()){
+                Teste test  = new Teste();
+                test.setIdTeste(rs.getInt("ID_TESTE"));
+                test.setNomeTeste(rs.getString("NM_TESTE"));
+                test.setDescTeste(rs.getString("DESC_TESTE"));
                 
-                rs.close();
-                stmt.close();
-                return user;
+                PreparedStatement stmt2 = this.connection.prepareStatement("SELECT * FROM PARTIDA WHERE ID_PARTIDA=?");
+                stmt2.setInt(1,test.getPartida().getIdPartida());
+                ResultSet rs2 = stmt2.executeQuery();
+                
+                Partida match = new Partida();
+                match.setIdPartida(rs2.getInt("ID_PARTIDA"));
+                match.setPontuacao(rs2.getDouble("PONTUACAO"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs2.getDate("DATA_HORA"));
+                match.setDataHora(data);
+                
+                PreparedStatement stmt3 = this.connection.prepareStatement("SELECT * FROM USUARIO WHERE ID_USUARIO=?");
+                stmt3.setInt(1,match.getUsuario().getIdUsuario());
+                ResultSet rs3 = stmt3.executeQuery();
+                
+                Usuario user = new Usuario();
+                user.setIdUsuario(rs3.getInt("ID_USUARIO"));
+                user.setNome(rs3.getString("NM_USUARIO"));
+                user.setLogin(rs3.getString("LOGIN"));
+                
+                TipoUsuario tpUser = new TipoUsuario();
+                tpUser.setIdTipoUsuario(rs3.getInt("ID_TIPO_USUARIO"));
+                
+                user.setTpUsuario(tpUser);
+                match.setUsuario(user);
+                test.setPartida(match);
+                
+                testes.add(test);
             }
             rs.close();
             stmt.close();
-            
+            return testes;
+                    
         } catch(SQLException e){
             throw new RuntimeException(e);
         } finally{
@@ -60,7 +91,6 @@ public class TesteDao {
                 connection.close();
             }
         }
-        return null;
     }
     
     public void alteraTeste(Teste teste) throws SQLException{
