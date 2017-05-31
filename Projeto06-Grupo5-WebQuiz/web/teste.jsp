@@ -19,7 +19,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%int id = Integer.parseInt(request.getParameter("id"));
+        <%int id =0;//= Integer.parseInt(request.getParameter("id"));
         int i = 0;
         TesteDao daoT = new TesteDao();
         Teste test = daoT.pegaTeste(id);
