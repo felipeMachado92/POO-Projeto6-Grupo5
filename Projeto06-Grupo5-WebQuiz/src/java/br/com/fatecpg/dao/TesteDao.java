@@ -69,6 +69,35 @@ public class TesteDao {
         }
     }
     
+    public Teste pegaTeste(int id) throws SQLException{
+        try{
+            List<Teste> testes = new ArrayList<>();
+            PreparedStatement stmt = this.connection.
+                    prepareStatement("SELECT * FROM TESTE WHERE ID=?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                Teste test  = new Teste();
+                test.setIdTeste(rs.getInt("ID_TESTE"));
+                test.setNomeTeste(rs.getString("NM_TESTE"));
+                test.setDescTeste(rs.getString("DESC_TESTE"));
+                return test;
+            }
+            rs.close();
+            stmt.close();
+                    
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        } finally{
+            if(!connection.isClosed()){
+                connection.close();
+            }
+        }
+        return null;
+    }
+    
+    
     public void alteraTeste(Teste teste) throws SQLException{
         try{
             PreparedStatement stmt = connection
